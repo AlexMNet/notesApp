@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<head>
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js"></script>
+</head>
+
+<div class="second-page">
+  <ol id="notes-list"></ol>
+</div>
+
+<a href="index.html"><h3>Back</h3></a>
+<button id="clear-btn">Clear All Notes</button>
+
+<script>
+  //Select Clear Button
+  const clearBtn = document.querySelector('#clear-btn');
+
+  //Clear local Storage and reload page
+  clearBtn.addEventListener('click', () => {
+    localStorage.clear();
+    location.reload();
+  });
+
+  (function getNotes() {
+    let notes = getExistingNotes();
+    //If not notes alert and redirect to main index page.
+    if (!notes) {
+      alert('There are no notes');
+      window.location.replace('/index.html');
+    }
+
+    let notesArray = Object.values(notes);
+    console.log(notesArray);
+    let orderedList = document.getElementById('notes-list');
+    notesArray.forEach((note) => {
+      let listItem = document.createElement('li');
+      listItem.innerHTML = note;
+      orderedList.appendChild(listItem);
+    });
+  })();
+</script>
